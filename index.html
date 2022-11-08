@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Assets/style.css"/>
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="text-info navbar-brand" href="index.html">Weather Dashboard</a>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="sidebar bg-light hide">
+                <ul class="nav nav-sidebar">
+                    <div class="history-list list-group">
+                        <br>
+                        <p class="text-center">HISTORY</p> <!---where history is appended-->
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 main">
+        <br><br><br><br>
+        <form class="d-flex">
+            <input class="inputForm form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="searchBtn btn btn-light" type="submit">Search</button>
+        </form>
+        <br>
+        <div>
+            <p class="welcomeText h2 text-center text-info">Welcome to Weather Dashboard!</p>
+            <p class="welcomeText h2 text-center text-info">Search a city to get started</p>
+        </div>
+        <div class="card w-100 h-80 text-center text-info">
+            <div class="card-body">
+                <h3 class="text-info card-text card-title"><span class="citySpan"></span></h3>
+                <p class="card-text">Temperature:<span class="tempSpan"></span></p>
+                <p class="card-text">Humidity:<span class="humiditySpan"></span></p>
+                <p class="card-text">Wind Speed:<span class="windSpan"></span></p>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="containerBlock">
+        <div class="main">
+            <p class="day1">Date</p>
+            <img class="day1Icon" alt="Weather icon">
+            <br><br>
+            <p class="day1Temp">Temp</p>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="/Assets/script.js"></script>
+</body>
+</html>
