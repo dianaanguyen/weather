@@ -23,6 +23,13 @@ input {
     text-align: center;
 }
 
+::-webkit-input-placeholder{
+    text-align: center;
+}
+:-moz-placeholder {
+    text-align: center;
+}
+
 .containerBlock {
     text-transform: uppercase;
     display: flex;
