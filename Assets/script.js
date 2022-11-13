@@ -30,6 +30,7 @@ var welcomeText = $(".welcomeText");
 var containerBlock = $(".containerBlock");
 var card = $(".card");
 var historyList = $(".historyList")
+var APIKey = "8b92ec0643e6c212528ff70aac22592f"
 
 $(document ).ready(function() {
     containerBlock.hide();
@@ -44,16 +45,33 @@ function getUserInput(event) {
 
     if (userInput) {
         console.log(userInput);
-        var cityUrl = "https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&appid=8b92ec0643e6c212528ff70aac22592f";
-        appendItems(cityUrl);
+        // var cityUrl = "https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid="+APIKey;
+        // appendItems(cityUrl);
+        getCityCoordinates(userInput)
     } else {
         alert("Please enter in a city");
     };
 };
 
-function appendItems(cityUrl) {
-    console.log(cityUrl);
-    fetch(cityUrl)
+function getCityCoordinates(city) {
+        var cityUrl = "http://api.openweathermap.org/geo/1.0/direct?q="+city+"&appid="+APIKey;
+        fetch(cityUrl)
+        .then(function(data) {
+            return data.json()
+        }) 
+        .then(function(data){
+            console.log(data)
+            var lat = data[0].lat
+            var lon = data[0].lon
+            appendItems(lat,lon)
+        })
+}
+
+
+function appendItems(lat,lon) {
+    // console.log(cityUrl);
+    var URL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid="+APIKey
+    fetch(URL)
         .then(function(response) {
             if (response.ok) {
                 console.log("Fetch response worked");
@@ -78,5 +96,129 @@ function appendItems(cityUrl) {
             tempSpan.text(temp);
             humiditySpan.text(humidity);
             windSpan.text(wind);
-        })
+
+            var icon1 = data.list[0].weather[0].icon;
+            var iconUrl1 = "https://openweathermap.org/img/w/" + icon1 + ".png";
+            day1.text("TODAY");
+            day1Icon.attr("src", iconUrl1);
+            day1Temp.text(temp);
+
+            var icon2 = data.list[0].weather[0].icon;
+            var iconUrl2 = "https://openweathermap.org/img/w/" + icon2 + ".png";
+            var date2 = moment.unix(data.list[8].dt).format("dddd");
+            day2.text(date2);
+            day2Icon.attr("src, iconUrl2");
+            var date2Temp =data.list[8].main.temp;
+            day2Temp.text(date2Temp);
+
+            var icon3 = data.list[16].weather[0].icon;
+            var iconUrl3 = "https://openweathermap.org/img/w/" + icon3 + ".png";
+            var date3 = moment.unix(data.list[16].dt).format("dddd");
+            day3.text(date3);
+            day3Icon.attr("src, iconUrl3");
+            var date3Temp = data.list[16].main.temp;
+            day3Temp.text(date3Temp);
+
+            var icon4 = data.list[24].weather[0].icon; // Day 4 Forecast
+            var iconUrl4 = "https://openweathermap.org/img/w/" + icon4 + ".png";
+            var date4 = moment.unix(data.list[24].dt).format("dddd");
+            day4.text(date4);
+            day4Icon.attr("src", iconUrl4);
+            var date4Temp = data.list[24].main.temp; 
+            day4Temp.text(date4Temp);
+
+            var icon5 = data.list[32].weather[0].icon; // Day 5 Forecast
+            var iconUrl5 = "https://openweathermap.org/img/w/" + icon5 + ".png";
+            var date5 = moment.unix(data.list[32].dt).format("dddd");
+            day5.text(date5);
+            day5Icon.attr("src", iconUrl5);
+            var date5Temp = data.list[32].main.temp; 
+            day5Temp.text(date5Temp);
+
+            var storeObject = {
+                "cityName": cityName,
+                "country": country,
+                "datae": date, 
+                "temp": temp,
+                "humidity": humidity,
+                "wind": wind,
+                "iconUrl1": iconUrl1,
+                "iconUrl2": iconUrl2,
+                "date2": date2,
+                "date2Temp": date2Temp,
+                "iconUrl3": iconUrl3,
+                "date3": date3,
+                "date3Temp": date3Temp,
+                "iconUrl4": iconUrl4,
+                "date4": date4,
+                "date4Temp": date4Temp,
+                "iconUrl5": iconUrl5,
+                "date5": date5,
+                "date5Temp": date5Temp,
+            }
+            var items = localStorage.getItem("items");
+            if (items === null){
+                items = [];
+            } else {
+                items = JSON.parse(items);
+            }
+            items.push(storeObject);
+            var allItems = JSON.stringify(items);
+            localStorage.setItem("items, allItems");
+        });
+};
+
+function showHistoryBtn() {
+    var items = localStorage.getItem("items");
+    items = JSON.parse(items);
+
+    if (items !== null) {
+        var counter = items.length - 1;
+
+        for (var i =0; i <= counter; i++) {
+            var button = $("<button>");
+            button.addClass("list-group-item");
+            button.text(items[i].cityName);
+            button.attr("name", items[i].cityName);
+            historyList.append(button);
+        }
+    } else {
+        console.log("Empty local storage");
+    }
 }
+
+function showHistoryData(e) {
+    e.preventDefault;
+    welcomeText.show(1000); 
+    containerBlock.show(2000);
+    card.show(1000);
+    var items = localStorage.getItem("items");
+    items = JSON.parse(items);
+    var nameOfCity = e.target.getAttribute("name");
+    var obj = items.find(i => i.cityName === nameOfCity);
+
+    citySpan.text(obj.cityName);
+    dateSpan.text(obj.date);
+    tempSpan.text(obj.temp);
+    humiditySpan.text(obj.humidity);
+    windSpan.text(obj.wind);
+    day1.text("TODAY");
+    day1Icon.attr("src", obj.iconUrl1);
+    day1Temp.text(obj.temp); 
+    day2.text(obj.date2);
+    day2Icon.attr("src", obj.iconUrl2);
+    day2Temp.text(obj.date2Temp);
+    day3.text(obj.date3);
+    day3Icon.attr("src", obj.iconUrl3);
+    day3Temp.text(obj.date3Temp);
+    day4.text(obj.date4);
+    day4Icon.attr("src", obj.iconUrl4);
+    day4Temp.text(obj.date4Temp);
+    day5.text(obj.date5);
+    day5Icon.attr("src", obj.iconUrl5);
+    day5Temp.text(obj.date5Temp);
+}
+
+showHistoryBtn();
+historyList.on("click", showHistoryData);
+searchBtn.on("click", getUserInput);
