@@ -22,15 +22,14 @@ var day4 = $(".day4"); // targets day 4
 var day4Icon = $(".day4Icon");
 var day4Temp = $(".day4Temp");
 var day2Humidity = $(".day2Humidity");
-var day5 = $(".day2"); // targets day 5
+var day5 = $(".day5"); // targets day 5
 var day5Icon = $(".day5Icon");
 var day5Temp = $(".day5Temp");
 var day5Humidity = $(".day5Humidity");
 var welcomeText = $(".welcomeText");
 var containerBlock = $(".containerBlock");
 var card = $(".card");
-var historyList = $(".historyList")
-var APIKey = "8b92ec0643e6c212528ff70aac22592f"
+var historyList = $(".history-list")
 
 $(document ).ready(function() {
     containerBlock.hide();
@@ -45,33 +44,34 @@ function getUserInput(event) {
 
     if (userInput) {
         console.log(userInput);
-        // var cityUrl = "https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid="+APIKey;
-        // appendItems(cityUrl);
-        getCityCoordinates(userInput)
+        var cityUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + userInput + "&units=imperial&appid=8b92ec0643e6c212528ff70aac22592f";
+        appendItems(cityUrl);
+        // getCityCoordinates(userInput)
     } else {
         alert("Please enter in a city");
     };
 };
 
-function getCityCoordinates(city) {
-        var cityUrl = "http://api.openweathermap.org/geo/1.0/direct?q="+city+"&appid="+APIKey;
-        fetch(cityUrl)
-        .then(function(data) {
-            return data.json()
-        }) 
-        .then(function(data){
-            console.log(data)
-            var lat = data[0].lat
-            var lon = data[0].lon
-            appendItems(lat,lon)
-        })
-}
+// function getCityCoordinates(city) {
+//         var cityUrl = "http://api.openweathermap.org/geo/1.0/direct?q="+city+"&appid="+APIKey;
+//         fetch(cityUrl)
+//         .then(function(data) {
+//             return data.json()
+//         }) 
+//         .then(function(data){
+//             console.log(data)
+//             var lat = data[0].lat
+//             var lon = data[0].lon
+//             appendItems(lat,lon)
+//         })
+// }
 
 
-function appendItems(lat,lon) {
-    // console.log(cityUrl);
-    var URL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid="+APIKey
-    fetch(URL)
+function appendItems(cityUrl) {
+    console.log(cityUrl);
+    fetch(cityUrl)
+    // var URL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid="+APIKey
+    // fetch(URL)
         .then(function(response) {
             if (response.ok) {
                 console.log("Fetch response worked");
@@ -90,32 +90,32 @@ function appendItems(lat,lon) {
             var date = moment.unix(data.list[0].dt).format("MMMM YY");
             var temp = data.list[0].main.temp;
             var humidity = data.list[0].main.humidity;
-            var wind = data.list[0].main.wind.speed;
+            var wind = data.list[0].wind.speed;
             citySpan.text(`${cityName}, ${country}`);
             dateSpan.text(date);
             tempSpan.text(temp);
             humiditySpan.text(humidity);
             windSpan.text(wind);
 
-            var icon1 = data.list[0].weather[0].icon;
+            var icon1 = data.list[0].weather[0].icon; //Day 1 Forecast
             var iconUrl1 = "https://openweathermap.org/img/w/" + icon1 + ".png";
             day1.text("TODAY");
             day1Icon.attr("src", iconUrl1);
             day1Temp.text(temp);
 
-            var icon2 = data.list[0].weather[0].icon;
+            var icon2 = data.list[8].weather[0].icon; // Day 2 Forecast
             var iconUrl2 = "https://openweathermap.org/img/w/" + icon2 + ".png";
             var date2 = moment.unix(data.list[8].dt).format("dddd");
             day2.text(date2);
-            day2Icon.attr("src, iconUrl2");
+            day2Icon.attr("src", iconUrl2);
             var date2Temp =data.list[8].main.temp;
             day2Temp.text(date2Temp);
 
-            var icon3 = data.list[16].weather[0].icon;
+            var icon3 = data.list[16].weather[0].icon; // Day 3 Forecast
             var iconUrl3 = "https://openweathermap.org/img/w/" + icon3 + ".png";
             var date3 = moment.unix(data.list[16].dt).format("dddd");
             day3.text(date3);
-            day3Icon.attr("src, iconUrl3");
+            day3Icon.attr("src", iconUrl3);
             var date3Temp = data.list[16].main.temp;
             day3Temp.text(date3Temp);
 
@@ -138,7 +138,7 @@ function appendItems(lat,lon) {
             var storeObject = {
                 "cityName": cityName,
                 "country": country,
-                "datae": date, 
+                "date": date, 
                 "temp": temp,
                 "humidity": humidity,
                 "wind": wind,
@@ -164,7 +164,7 @@ function appendItems(lat,lon) {
             }
             items.push(storeObject);
             var allItems = JSON.stringify(items);
-            localStorage.setItem("items, allItems");
+            localStorage.setItem("items", allItems);
         });
 };
 
@@ -175,7 +175,7 @@ function showHistoryBtn() {
     if (items !== null) {
         var counter = items.length - 1;
 
-        for (var i =0; i <= counter; i++) {
+        for (var i =0; i <= counter ; i++) {
             var button = $("<button>");
             button.addClass("list-group-item");
             button.text(items[i].cityName);
@@ -219,6 +219,6 @@ function showHistoryData(e) {
     day5Temp.text(obj.date5Temp);
 }
 
-showHistoryBtn();
-historyList.on("click", showHistoryData);
-searchBtn.on("click", getUserInput);
+showHistoryBtn(); // Show recent searhes
+historyList.on("click", showHistoryData); // history button will show data
+searchBtn.on("click", getUserInput); // function will execute when user clicks search

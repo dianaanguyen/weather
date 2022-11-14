@@ -30,6 +30,10 @@ input {
     text-align: center;
 }
 
+p span { /* Targets the data being fetched */
+    font-weight: bold;
+}
+
 .containerBlock {
     text-transform: uppercase;
     display: flex;
