@@ -5,7 +5,7 @@
 
 body {
     min-height: 100vh;
-        background: linear-gradient(15deg, white,lightblue);
+        background: linear-gradient(15deg, white,rgb(119, 209, 239));
         font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         font-size: 18px;
     height: 100%;
