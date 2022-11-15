@@ -10,4 +10,5 @@ This application is a weather dashboard, where user inputs the desired city they
 https://dianaanguyen.github.io/weather/
 
 Screenshot of deployed application
-![Screen Shot 2022-11-14 at 3 51 18 PM](https://user-images.githubusercontent.com/111664734/201792342-4816f866-45a3-404f-b390-9c97c4952ee9.png)
+![Screen Shot 2022-11-15 at 12 56 03 AM](https://user-images.githubusercontent.com/111664734/201874913-fd518c0a-99a2-43e8-9845-904aa136bd88.png)
+
