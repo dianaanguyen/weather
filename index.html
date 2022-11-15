@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="./Assets/reset.css"/>
@@ -25,27 +26,27 @@
                     </div>
                 </ul>
             </div>
-        </div>
-        <div class="col-sm-12 main">
-            <br><br><br><br>
-            <form class="d-flex">
-                <input class="inputForm form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="searchBtn btn btn-light" type="submit">Search</button>
-            </form>
-             <br>
-            <div>
-                <p class="welcomeText h2 text-center text-info">Welcome to Weather Dashboard!</p>
-                <p class="welcomeText h2 text-center text-info">Search a city to get the latest forecast</p>
-            </div>
-            <div class="card w-100 h-80 text-center text-info">
-                <div class="card-body">
-                    <h3 class="text-info card-text card-title"><span class="citySpan"></span></h3>
-                    <p class="card-text">Temperature:<span class="tempSpan"></span></p>
-                    <p class="card-text">Humidity:<span class="humiditySpan"></span></p>
-                    <p class="card-text">Wind Speed:<span class="windSpan"></span></p>
+            <div class="col-sm-12 main">
+                <br><br><br><br>
+                <form class="d-flex">
+                    <input class="inputForm form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="searchBtn btn btn-light" type="submit">Search</button>
+                </form>
+                <br>
+                <div>
+                    <p class="welcomeText h2 text-center text-info">Welcome to Weather Dashboard!</p>
+                    <p class="welcomeText h2 text-center text-info">Search a city to get the latest forecast</p>
                 </div>
+                <div class="card w-100 h-80 text-center text-info">
+                    <div class="card-body">
+                        <h3 class="text-info card-text card-title"><span class="citySpan"></span></h3>
+                        <p class="card-text">Temperature:<span class="tempSpan"></span></p>
+                        <p class="card-text">Humidity:<span class="humiditySpan"></span></p>
+                        <p class="card-text">Wind Speed:<span class="windSpan"></span></p>
+                    </div>
+                </div>
+                <br>
             </div>
-            <br>
         </div>
         <div class="containerBlock"> <!---5 day weather forecast-->
             <div class="main">
