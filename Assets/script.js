@@ -44,7 +44,7 @@ function getUserInput(event) {
 
     if (userInput) {
         console.log(userInput);
-        var cityUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + userInput + "&units=imperial&appid=8b92ec0643e6c212528ff70aac22592f";
+        var cityUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + userInput + "&units=imperial&appid=8b92ec0643e6c212528ff70aac22592f";
         appendItems(cityUrl);
         // getCityCoordinates(userInput)
     } else {
